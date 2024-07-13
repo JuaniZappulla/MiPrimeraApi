@@ -49,5 +49,49 @@ namespace MiPrimeraApi.Datos
                 }
             }
         }
+
+        public async Task editarPrecioProducto(MProductos mProductos)
+        {
+            using (var sql = new SqlConnection(cn.ConnectionString()))
+            {
+                using (var cmd = new SqlCommand("usp_editarPrecio", sql))
+                {
+                    await sql.OpenAsync();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProducto", mProductos.Id);
+                    cmd.Parameters.AddWithValue("@precio", mProductos.Precio);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public async Task editarDescripcionProducto(MProductos mProductos)
+        {
+            using (var sql = new SqlConnection(cn.ConnectionString()))
+            {
+                using (var cmd = new SqlCommand("usp_editarDescripcion", sql))
+                {
+                    await sql.OpenAsync();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProducto", mProductos.Id);
+                    cmd.Parameters.AddWithValue("@descripcion", mProductos.Precio);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public async Task eliminarProducto(int id)
+        {
+            using (var sql = new SqlConnection(cn.ConnectionString()))
+            {
+                using (var cmd = new SqlCommand("usp_eliminaProducto", sql))
+                {
+                    await sql.OpenAsync();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProducto", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+        }
     }
 }
